@@ -22,14 +22,14 @@ Over six weeks, you work on one cumulative problem: classifying consumer financi
 | — | [Pre-work](site/pre-work.html) | Before Apr 8 | 8 modules |
 | 1 | [Fine-tuning and data audit](site/week1.html) | Apr 8 | Released |
 | 2 | [Controlled improvement and failure analysis](site/week2.html) | Apr 15 | Released |
-| 3 | Parameter-efficient adaptation (LoRA/PEFT) | Apr 22 | — |
-| 4 | Error analysis, slices, calibration, decoder comparison | Apr 29 | — |
-| 5 | Quantization and decoder economics | May 6 | — |
+| 3 | [Parameter-efficient adaptation (LoRA/PEFT)](site/week3.html) | Apr 22 | Released |
+| 4 | [Error diagnosis: slices, calibration, and cross-model analysis](site/week4.html) | Apr 29 | Released |
+| 5 | [Quantization and decoder economics](site/week5.html) | May 6 | Released |
 | 6 | Distillation and final model decision | May 13 | — |
 
 ## Latest from the Blog
 
-**[When Better Means Worse](site/blog/09_when_better_means_worse.html)** — I applied class weighting to a 113-category text classifier. Accuracy dropped five points. Macro F1 improved. Ten classes that the model had never once predicted correctly started getting nonzero F1.
+**[Your int8 Quantization Is 2.5× Slower Than fp16](site/blog/11_int8_is_slower.html)** — The LLM.int8 paper from 2022 told you this would happen. The blog tutorials skip that part.
 
 [All posts →](site/blog/)
 
