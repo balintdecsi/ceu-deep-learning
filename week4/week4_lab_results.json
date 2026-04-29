@@ -1,0 +1,42 @@
+{
+  "encoder": {
+    "accuracy": 0.5659409020217729,
+    "macro_f1": 0.20906378844081713,
+    "ece": 0.06197745396899028
+  },
+  "decoder": {
+    "accuracy": 0.5696734059097979,
+    "macro_f1": 0.23980579170115263,
+    "ece": 0.10130800725211436
+  },
+  "tail_tier_breakdown_encoder": {
+    "n_tail_examples": 210,
+    "n_tail_errors": 195,
+    "pct_to_head": 41.02564102564103,
+    "pct_to_mid": 48.717948717948715,
+    "pct_to_tail": 10.256410256410257
+  },
+  "tail_tier_breakdown_decoder": {
+    "n_tail_examples": 210,
+    "n_tail_errors": 179,
+    "pct_to_head": 41.340782122905026,
+    "pct_to_mid": 48.04469273743017,
+    "pct_to_tail": 10.614525139664805
+  },
+  "val_count_histogram": {
+    "n=0": 0,
+    "n=1": 17,
+    "n=2": 7,
+    "n=3-4": 11,
+    "n=5-10": 17,
+    "n=11-50": 38,
+    "n=51+": 23
+  },
+  "flawed_checkpoint": {
+    "accuracy_before_fix": 0.0013996889580093312,
+    "macro_f1_before_fix": 0.0024106687631755387,
+    "shift_k": 17,
+    "accuracy_after_fix": 0.567651632970451,
+    "macro_f1_after_fix": 0.24242861156632495
+  }
+}
