@@ -1,0 +1,7 @@
+model,precision,ece_pre,T,ece_post
+encoder,fp16,0.0618,1.062,0.0289
+encoder,int8,0.0586,1.06,0.029
+encoder,int4,0.0393,1.038,0.0222
+decoder,fp16,0.1013,1.112,0.0463
+decoder,int8,0.1056,1.113,0.0486
+decoder,int4,0.1033,1.107,0.0471
