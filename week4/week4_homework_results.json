@@ -1,0 +1,247 @@
+{
+  "slice_table": [
+    {
+      "axis": "char_length",
+      "slice": "q1_shortest",
+      "n": 1609,
+      "encoder_f1": 0.2044,
+      "decoder_f1": 0.2439,
+      "diff": 0.0395
+    },
+    {
+      "axis": "char_length",
+      "slice": "q2",
+      "n": 1617,
+      "encoder_f1": 0.224,
+      "decoder_f1": 0.2526,
+      "diff": 0.0286
+    },
+    {
+      "axis": "char_length",
+      "slice": "q3",
+      "n": 1603,
+      "encoder_f1": 0.2782,
+      "decoder_f1": 0.2753,
+      "diff": -0.003
+    },
+    {
+      "axis": "char_length",
+      "slice": "q4_longest",
+      "n": 1601,
+      "encoder_f1": 0.222,
+      "decoder_f1": 0.2645,
+      "diff": 0.0425
+    },
+    {
+      "axis": "redaction",
+      "slice": "clean",
+      "n": 2342,
+      "encoder_f1": 0.2264,
+      "decoder_f1": 0.2354,
+      "diff": 0.009
+    },
+    {
+      "axis": "redaction",
+      "slice": "redacted",
+      "n": 4088,
+      "encoder_f1": 0.2185,
+      "decoder_f1": 0.2596,
+      "diff": 0.0411
+    },
+    {
+      "axis": "tok_length",
+      "slice": "1-30",
+      "n": 1037,
+      "encoder_f1": 0.2481,
+      "decoder_f1": 0.2519,
+      "diff": 0.0038
+    },
+    {
+      "axis": "tok_length",
+      "slice": "31-80",
+      "n": 3445,
+      "encoder_f1": 0.2241,
+      "decoder_f1": 0.2581,
+      "diff": 0.034
+    },
+    {
+      "axis": "tok_length",
+      "slice": "81-127",
+      "n": 1888,
+      "encoder_f1": 0.2253,
+      "decoder_f1": 0.2518,
+      "diff": 0.0265
+    },
+    {
+      "axis": "tok_length",
+      "slice": "truncated_128",
+      "n": 60,
+      "encoder_f1": 0.2656,
+      "decoder_f1": 0.2966,
+      "diff": 0.0309
+    },
+    {
+      "axis": "numeric",
+      "slice": "non_numeric",
+      "n": 4861,
+      "encoder_f1": 0.213,
+      "decoder_f1": 0.2457,
+      "diff": 0.0327
+    },
+    {
+      "axis": "numeric",
+      "slice": "numeric",
+      "n": 1569,
+      "encoder_f1": 0.2387,
+      "decoder_f1": 0.2578,
+      "diff": 0.0191
+    },
+    {
+      "axis": "opener_I",
+      "slice": "other_opener",
+      "n": 4278,
+      "encoder_f1": 0.2159,
+      "decoder_f1": 0.2406,
+      "diff": 0.0247
+    },
+    {
+      "axis": "opener_I",
+      "slice": "starts_I",
+      "n": 2152,
+      "encoder_f1": 0.2561,
+      "decoder_f1": 0.2803,
+      "diff": 0.0242
+    },
+    {
+      "axis": "allcaps",
+      "slice": "caps_high",
+      "n": 3208,
+      "encoder_f1": 0.2224,
+      "decoder_f1": 0.2649,
+      "diff": 0.0425
+    },
+    {
+      "axis": "allcaps",
+      "slice": "caps_low",
+      "n": 3222,
+      "encoder_f1": 0.2242,
+      "decoder_f1": 0.2455,
+      "diff": 0.0213
+    }
+  ],
+  "temperature_scaling": {
+    "encoder": {
+      "T": 1.1656368970870972,
+      "ece_pre": 0.06134009616185866,
+      "ece_post": 0.016840595560811727,
+      "f1_pre": 0.23816244467850747,
+      "f1_post": 0.23816244467850747
+    },
+    "decoder": {
+      "T": 1.2904249429702759,
+      "ece_pre": 0.10605710495500875,
+      "ece_post": 0.022063966079225433,
+      "f1_pre": 0.2606587558885694,
+      "f1_post": 0.2606587558885694
+    }
+  },
+  "qualitative_tags": {
+    "encoder_right_decoder_wrong": {
+      "account status dispute": 1,
+      "identity theft": 1,
+      "unauthorized inquiry": 2,
+      "persistent dispute": 1,
+      "payoff verification": 1,
+      "closed account removal": 1,
+      "loan fee mistake": 1,
+      "removal dispute": 1,
+      "marketing deception": 1,
+      "harassing calls": 1,
+      "mortgage application": 1,
+      "loan amount error": 1,
+      "foreclosure notification": 1,
+      "public record removal": 1,
+      "debt validation letter": 1,
+      "late fee dispute": 1,
+      "medical debt error": 1,
+      "missing debt agreement": 1,
+      "unverified debt": 1
+    },
+    "decoder_right_encoder_wrong": {
+      "duplicate reporting": 1,
+      "identity theft inquiry": 1,
+      "verify account mismatch": 1,
+      "wrong number harassment": 1,
+      "loan modification delay": 1,
+      "account login issue": 1,
+      "fraudulent activity": 1,
+      "debt contract dispute": 1,
+      "unauthorized hard hit": 1,
+      "reward point issue": 1,
+      "account sale dispute": 1,
+      "charge-off options": 1,
+      "contract liability": 1,
+      "tax reporting error": 1,
+      "loan payoff refund": 1,
+      "ATM machine issue": 1,
+      "incorrect debt reporting": 1,
+      "old account removal": 1,
+      "debt validation cycle": 1,
+      "employment contact": 1
+    }
+  },
+  "per_class_worst": {
+    "encoder": [
+      {
+        "class_id": 3,
+        "name": "Advertising and marketing, including promotional offers",
+        "f1": 0.0
+      },
+      {
+        "class_id": 8,
+        "name": "Applying for a mortgage or refinancing an existing mortgage",
+        "f1": 0.0
+      },
+      {
+        "class_id": 27,
+        "name": "Credit card protection / Debt protection",
+        "f1": 0.0
+      }
+    ],
+    "decoder": [
+      {
+        "class_id": 72,
+        "name": "Payment to acct not credited",
+        "f1": 0.0
+      },
+      {
+        "class_id": 75,
+        "name": "Problem adding money",
+        "f1": 0.0
+      },
+      {
+        "class_id": 80,
+        "name": "Problem with a lender or other company charging your account",
+        "f1": 0.0
+      }
+    ]
+  },
+  "bootstrap": {
+    "encoder_mean": 0.22054186098862202,
+    "encoder_ci95": [
+      0.20361082809634404,
+      0.23761743196671523
+    ],
+    "decoder_mean": 0.24941366408394736,
+    "decoder_ci95": [
+      0.22823681539261403,
+      0.2703647423667261
+    ],
+    "diff_mean": 0.02887180309532534,
+    "diff_ci95": [
+      0.011176442427396568,
+      0.047860018784576144
+    ],
+    "diff_excludes_zero": true
+  }
+}
