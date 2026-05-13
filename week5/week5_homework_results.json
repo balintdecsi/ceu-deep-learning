@@ -1,0 +1,406 @@
+{
+  "tier_deltas_int8_int4": {
+    "encoder": {
+      "int8": {
+        "head": {
+          "n": 5155,
+          "mean": 0.0010420950533462645,
+          "ci_low": -0.0027158098933074415,
+          "ci_high": 0.004849660523763344
+        },
+        "mid": {
+          "n": 1065,
+          "mean": -0.006151173708920187,
+          "ci_low": -0.016901408450704203,
+          "ci_high": 0.004694835680751186
+        },
+        "tail": {
+          "n": 210,
+          "mean": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        }
+      },
+      "int4": {
+        "head": {
+          "n": 5155,
+          "mean": -0.02800872938894278,
+          "ci_low": -0.036857419980601325,
+          "ci_high": -0.01901066925315231
+        },
+        "mid": {
+          "n": 1065,
+          "mean": -0.006762441314553991,
+          "ci_low": -0.02723004694835679,
+          "ci_high": 0.010328638497652587
+        },
+        "tail": {
+          "n": 210,
+          "mean": 0.02866190476190476,
+          "ci_low": 0.004761904761904759,
+          "ci_high": 0.0524999999999999
+        }
+      }
+    },
+    "decoder": {
+      "int8": {
+        "head": {
+          "n": 5155,
+          "mean": -0.004290009699321048,
+          "ci_low": -0.009311348205625625,
+          "ci_high": 0.000775945683802129
+        },
+        "mid": {
+          "n": 1065,
+          "mean": 0.0027755868544600926,
+          "ci_low": -0.007511737089201831,
+          "ci_high": 0.012230046948356806
+        },
+        "tail": {
+          "n": 210,
+          "mean": -0.005176190476190476,
+          "ci_low": -0.019047619047619063,
+          "ci_high": 0.009523809523809518
+        }
+      },
+      "int4": {
+        "head": {
+          "n": 5155,
+          "mean": -0.030913676042677012,
+          "ci_low": -0.03996120271580983,
+          "ci_high": -0.021144519883608104
+        },
+        "mid": {
+          "n": 1065,
+          "mean": -0.03168544600938967,
+          "ci_low": -0.04978873239436623,
+          "ci_high": -0.013145539906103287
+        },
+        "tail": {
+          "n": 210,
+          "mean": -0.01031904761904762,
+          "ci_low": -0.042857142857142844,
+          "ci_high": 0.023809523809523808
+        }
+      }
+    }
+  },
+  "split_val_ece": [
+    {
+      "model": "encoder",
+      "precision": "fp16",
+      "T_fit_on_A": 1.055,
+      "ece_B_pre": 0.0613,
+      "ece_B_post": 0.0397,
+      "delta": -0.0216
+    },
+    {
+      "model": "encoder",
+      "precision": "int8",
+      "T_fit_on_A": 1.053,
+      "ece_B_pre": 0.0583,
+      "ece_B_post": 0.0385,
+      "delta": -0.0197
+    },
+    {
+      "model": "encoder",
+      "precision": "int4",
+      "T_fit_on_A": 1.03,
+      "ece_B_pre": 0.0461,
+      "ece_B_post": 0.0402,
+      "delta": -0.0059
+    },
+    {
+      "model": "decoder",
+      "precision": "fp16",
+      "T_fit_on_A": 1.11,
+      "ece_B_pre": 0.1017,
+      "ece_B_post": 0.0638,
+      "delta": -0.0379
+    },
+    {
+      "model": "decoder",
+      "precision": "int8",
+      "T_fit_on_A": 1.111,
+      "ece_B_pre": 0.1036,
+      "ece_B_post": 0.0651,
+      "delta": -0.0385
+    },
+    {
+      "model": "decoder",
+      "precision": "int4",
+      "T_fit_on_A": 1.106,
+      "ece_B_pre": 0.1044,
+      "ece_B_post": 0.0666,
+      "delta": -0.0378
+    }
+  ],
+  "named_class_trajectories": [
+    {
+      "tier": "head",
+      "class": "Incorrect information on your report",
+      "class_id": 52,
+      "n_val": 1482,
+      "model": "encoder",
+      "precision": "fp16",
+      "accuracy": 0.8131,
+      "mean_p_true": 0.6716
+    },
+    {
+      "tier": "head",
+      "class": "Incorrect information on your report",
+      "class_id": 52,
+      "n_val": 1482,
+      "model": "encoder",
+      "precision": "int8",
+      "accuracy": 0.8138,
+      "mean_p_true": 0.6703
+    },
+    {
+      "tier": "head",
+      "class": "Incorrect information on your report",
+      "class_id": 52,
+      "n_val": 1482,
+      "model": "encoder",
+      "precision": "int4",
+      "accuracy": 0.7746,
+      "mean_p_true": 0.6186
+    },
+    {
+      "tier": "head",
+      "class": "Incorrect information on your report",
+      "class_id": 52,
+      "n_val": 1482,
+      "model": "decoder",
+      "precision": "fp16",
+      "accuracy": 0.8165,
+      "mean_p_true": 0.7026
+    },
+    {
+      "tier": "head",
+      "class": "Incorrect information on your report",
+      "class_id": 52,
+      "n_val": 1482,
+      "model": "decoder",
+      "precision": "int8",
+      "accuracy": 0.8077,
+      "mean_p_true": 0.7057
+    },
+    {
+      "tier": "head",
+      "class": "Incorrect information on your report",
+      "class_id": 52,
+      "n_val": 1482,
+      "model": "decoder",
+      "precision": "int4",
+      "accuracy": 0.7996,
+      "mean_p_true": 0.6697
+    },
+    {
+      "tier": "mid",
+      "class": "Managing, opening, or closing your mobile wallet account",
+      "class_id": 62,
+      "n_val": 14,
+      "model": "encoder",
+      "precision": "fp16",
+      "accuracy": 0.2143,
+      "mean_p_true": 0.1586
+    },
+    {
+      "tier": "mid",
+      "class": "Managing, opening, or closing your mobile wallet account",
+      "class_id": 62,
+      "n_val": 14,
+      "model": "encoder",
+      "precision": "int8",
+      "accuracy": 0.2143,
+      "mean_p_true": 0.1459
+    },
+    {
+      "tier": "mid",
+      "class": "Managing, opening, or closing your mobile wallet account",
+      "class_id": 62,
+      "n_val": 14,
+      "model": "encoder",
+      "precision": "int4",
+      "accuracy": 0.1429,
+      "mean_p_true": 0.1065
+    },
+    {
+      "tier": "mid",
+      "class": "Managing, opening, or closing your mobile wallet account",
+      "class_id": 62,
+      "n_val": 14,
+      "model": "decoder",
+      "precision": "fp16",
+      "accuracy": 0.2143,
+      "mean_p_true": 0.1605
+    },
+    {
+      "tier": "mid",
+      "class": "Managing, opening, or closing your mobile wallet account",
+      "class_id": 62,
+      "n_val": 14,
+      "model": "decoder",
+      "precision": "int8",
+      "accuracy": 0.2143,
+      "mean_p_true": 0.1809
+    },
+    {
+      "tier": "mid",
+      "class": "Managing, opening, or closing your mobile wallet account",
+      "class_id": 62,
+      "n_val": 14,
+      "model": "decoder",
+      "precision": "int4",
+      "accuracy": 0.2857,
+      "mean_p_true": 0.1645
+    },
+    {
+      "tier": "tail",
+      "class": "Cash advance fee",
+      "class_id": 18,
+      "n_val": 2,
+      "model": "encoder",
+      "precision": "fp16",
+      "accuracy": 0.0,
+      "mean_p_true": 0.0407
+    },
+    {
+      "tier": "tail",
+      "class": "Cash advance fee",
+      "class_id": 18,
+      "n_val": 2,
+      "model": "encoder",
+      "precision": "int8",
+      "accuracy": 0.0,
+      "mean_p_true": 0.0468
+    },
+    {
+      "tier": "tail",
+      "class": "Cash advance fee",
+      "class_id": 18,
+      "n_val": 2,
+      "model": "encoder",
+      "precision": "int4",
+      "accuracy": 0.0,
+      "mean_p_true": 0.0181
+    },
+    {
+      "tier": "tail",
+      "class": "Cash advance fee",
+      "class_id": 18,
+      "n_val": 2,
+      "model": "decoder",
+      "precision": "fp16",
+      "accuracy": 1.0,
+      "mean_p_true": 0.5942
+    },
+    {
+      "tier": "tail",
+      "class": "Cash advance fee",
+      "class_id": 18,
+      "n_val": 2,
+      "model": "decoder",
+      "precision": "int8",
+      "accuracy": 1.0,
+      "mean_p_true": 0.5523
+    },
+    {
+      "tier": "tail",
+      "class": "Cash advance fee",
+      "class_id": 18,
+      "n_val": 2,
+      "model": "decoder",
+      "precision": "int4",
+      "accuracy": 1.0,
+      "mean_p_true": 0.6944
+    }
+  ],
+  "constraint_check": [
+    {
+      "model": "decoder",
+      "precision": "fp16",
+      "accuracy": 0.5697,
+      "macro_f1": 0.2399,
+      "latency_ms": 5.35,
+      "vram_gb": 1.15,
+      "batch_size": 32,
+      "ece_post": 0.0463,
+      "meets_latency": true,
+      "meets_f1": true,
+      "meets_ece": true,
+      "meets_all": true
+    },
+    {
+      "model": "decoder",
+      "precision": "int4",
+      "accuracy": 0.5392,
+      "macro_f1": 0.2205,
+      "latency_ms": 7.89,
+      "vram_gb": 1.78,
+      "batch_size": 32,
+      "ece_post": 0.0471,
+      "meets_latency": true,
+      "meets_f1": true,
+      "meets_ece": true,
+      "meets_all": true
+    },
+    {
+      "model": "decoder",
+      "precision": "int8",
+      "accuracy": 0.5666,
+      "macro_f1": 0.2401,
+      "latency_ms": 13.09,
+      "vram_gb": 1.82,
+      "batch_size": 32,
+      "ece_post": 0.0486,
+      "meets_latency": false,
+      "meets_f1": true,
+      "meets_ece": true,
+      "meets_all": false
+    },
+    {
+      "model": "encoder",
+      "precision": "fp16",
+      "accuracy": 0.5663,
+      "macro_f1": 0.2095,
+      "latency_ms": 2.35,
+      "vram_gb": 0.41,
+      "batch_size": 32,
+      "ece_post": 0.0289,
+      "meets_latency": true,
+      "meets_f1": true,
+      "meets_ece": true,
+      "meets_all": true
+    },
+    {
+      "model": "encoder",
+      "precision": "int4",
+      "accuracy": 0.5435,
+      "macro_f1": 0.2119,
+      "latency_ms": 3.19,
+      "vram_gb": 0.57,
+      "batch_size": 32,
+      "ece_post": 0.0222,
+      "meets_latency": true,
+      "meets_f1": true,
+      "meets_ece": true,
+      "meets_all": true
+    },
+    {
+      "model": "encoder",
+      "precision": "int8",
+      "accuracy": 0.5659,
+      "macro_f1": 0.2071,
+      "latency_ms": 6.27,
+      "vram_gb": 0.54,
+      "batch_size": 32,
+      "ece_post": 0.029,
+      "meets_latency": true,
+      "meets_f1": true,
+      "meets_ece": true,
+      "meets_all": true
+    }
+  ]
+}
