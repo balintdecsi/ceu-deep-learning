@@ -8856,6 +8856,8 @@ dominated points if any, or an argument for why no point dominates)</li>
 vLLM would look different)</li>
 </ul>
 <p><strong>YOUR RESPONSE:</strong></p>
+<p>From the six-row summary, <strong>encoder–fp16</strong> is best on both resources (<strong>2.35 ms</strong>, <strong>0.41 GB VRAM</strong>, <strong>0.5663</strong> acc). <strong>Encoder–int4</strong> / <strong>decoder–int4</strong> trade accuracy down without a clean speed win (decoder int4 even uses <strong>more</strong> VRAM than fp16). <strong>Decoder–int8</strong> is near fp16 accuracy but <strong>13.09 ms</strong>, so no dominant “int8 wins” point. Default memo pick: <strong>encoder–fp16</strong> for latency-first serving.</p>
+<p><strong>Hardware:</strong> “int8 is faster” is false on this T4 + bitsandbytes run; <strong>Dettmers (LLM.int8())</strong> is the reminder that kernels/GPU change who is on the Pareto frontier.</p>
 </div>
 </div>
 </div>
@@ -8882,6 +8884,8 @@ tail) anchored in your trajectory plot</li>
 don't dismiss wide CIs as "nothing"</li>
 </ul>
 <p><strong>YOUR RESPONSE:</strong></p>
+<p><strong>int8:</strong> tier CIs mostly cross zero → looks like noise, not a clear Δacc story. <strong>int4:</strong> <strong>head</strong> drops on both models (*); decoder <strong>mid</strong> too; encoder <strong>tail</strong> has a positive Δacc CI but <strong>n=210</strong>, so I do not overclaim it.</p>
+<p><strong>Macro F1</strong> smooths over that <strong>5155/6430</strong> val points are <strong>head</strong>, so the headline number is head-heavy. <strong>Named class</strong> (<em>Incorrect information on your report</em>): acc <strong>0.813→0.775</strong> fp16→int4, matching the int4 head hit.</p>
 </div>
 </div>
 </div>
@@ -8908,6 +8912,8 @@ below 0.8 confidence)?</p>
 your tables</li>
 </ul>
 <p><strong>YOUR RESPONSE:</strong></p>
+<p>Lab table: <strong>pre-ECE</strong> moves with precision, but <strong>post-scaling</strong> ECE stays low (decoder <strong>~0.046–0.049</strong> across precisions), so <strong>T</strong> still fixes int8/int4 enough to matter. Split val: fit <strong>T</strong> on half A, <strong>decoder int4</strong> on half B goes <strong>0.1044→0.0666</strong>, so not just val overfit (LBFGS warnings noted). Same idea as <strong>Week 4:</strong> one <strong>T</strong> rescues a lot.</p>
+<p>For a <strong>0.8</strong> human-review gate, post-ECE still <strong>~0.047</strong> on decoder configs means thresholds are not “truth labels”—I would recalibrate on prod traffic.</p>
 </div>
 </div>
 </div>
@@ -8940,6 +8946,7 @@ plausibly change</li>
 SmoothQuant) — by author, in-line</li>
 </ul>
 <p><strong>YOUR RESPONSE:</strong></p>
+<p><strong><code>check_df</code>:</strong> <strong>5/6</strong> pass; only <strong>decoder–int8</strong> fails latency (<strong>13.09 ms</strong> &gt; <strong>10 ms</strong>). I ship <strong>encoder–fp16</strong> (<strong>2.35 ms</strong>, post-ECE <strong>0.0289</strong>, F1 <strong>0.2095</strong>). Binding blocker for decoder-int8 is <strong>latency</strong>, not F1/ECE. <strong>Dettmers</strong> explains int8 surprises; a <strong>GPTQ + vLLM</strong> stack could reorder timings vs bitsandbytes.</p>
 </div>
 </div>
 </div>
@@ -8964,6 +8971,8 @@ reinforced) it</li>
 <li>A statement of what additional evidence would change your mind</li>
 </ul>
 <p><strong>YOUR RESPONSE:</strong></p>
+<p>Week 3 I picked <strong>decoder</strong> for the tiny accuracy edge (<strong>0.5697 vs 0.5663</strong>). Week 5 <strong>complicates</strong> that: <strong>decoder–int8</strong> misses the latency budget while <strong>encoder–fp16</strong> stays fastest with <strong>better</strong> post-ECE (<strong>0.0289 vs 0.0463</strong>). Main update: <strong>int8 ≠ automatic efficiency</strong> on this hardware.</p>
+<p>I would change my mind with <strong>vLLM-style p99</strong> numbers on the same weights, or a cost model that pays for decoder quality enough to accept <strong>13 ms</strong> inference.</p>
 </div>
 </div>
 </div>
