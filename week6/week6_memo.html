@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week 6 Technical Note</title>
+  <style>
+    body {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      color: #222;
+      background: #fff;
+    }
+    h1, h2 {
+      line-height: 1.2;
+      color: #111;
+    }
+    h1 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.3rem;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    p {
+      margin: 0.7rem 0;
+    }
+    .meta {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    .note {
+      background: #f7f7f7;
+      border-left: 4px solid #999;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Week 6 Technical Note: Distillation as Recipe Design</h1>
+  <p class="meta">ECBS5200 - Practical Deep Learning Engineering</p>
+
+  <h2>1. What did distillation transfer?</h2>
+  <p>Distillation mainly transferred distributional structure, not just top-1 accuracy. Per-tier F1 deltas (distilled - vanilla) were head +0.0209 (CI [+0.0065, +0.0356]), mid +0.0194 (CI [-0.0089, +0.0473]), and tail +0.0049 (CI [-0.0262, +0.0401]).</p>
+  <p>ECE dropped in every tier: head 0.0849 to 0.0127 (-0.0722), mid 0.2970 to 0.1926 (-0.1044), and tail 0.3932 to 0.2574 (-0.1358). JS divergence to the teacher also dropped but did not vanish: head 0.0943 to 0.0530, mid 0.1522 to 0.0901, and tail 0.1998 to 0.1102.</p>
+  <p>That pattern fits the claim that KD transfers the shape of the distribution, meaning the relative probabilities across classes, not just the argmax label. Test B shows the metric split: vanilla+T beats KD on ECE (0.0263 vs 0.0546), but KD wins on NLL (1.3321 vs 1.4297). So the property KD transfers that T-scaling cannot is the full-distribution structure measured by NLL and JS. The teacher tail F1 is only 0.1976, so even perfect transfer cannot push tail much higher than that ceiling.</p>
+
+  <h2>2. What didn't distillation fix?</h2>
+  <p>Tail F1 is low across models: vanilla 0.1249, distilled 0.1298, and teacher 0.1976. That cross-model pattern points to a data ceiling, not just a KD failure, because even the 32B teacher is only around 0.20 on tail.</p>
+  <p>The data-confound result backs this up: data shift gave about +0.055 macro F1 while KD gave only +0.015, so data composition moves the needle more than recipe choice. If it were mainly a KD-method issue, I would expect a much larger jump from vanilla to distilled on tail, which we do not see.</p>
+  <p>To falsify the data-ceiling story, I would run a tail-boost experiment: add about 50 labeled examples per tail class, or do a stratified resample that equalizes tail counts, and see if teacher tail F1 rises above about 0.30. If it does, the ceiling was data; if it does not, the task or label space is likely too noisy or ambiguous for those rare classes.</p>
+
+  <h2>3. Hyperparameters and the noise floor</h2>
+  <p>The lab default (T_d=4, alpha=0.7) does not dominate every metric I care about. In the measured shortlist, the default has F1 0.2872, ECE 0.0546, NLL 1.3321, and tail F1 0.1217. The selected grid config (T_d=1.0, alpha=0.9) improves the Scenario B metric, with ECE 0.0286, and also has slightly higher F1 0.2896 and tail F1 0.1333, but its NLL is a bit worse at 1.3370.</p>
+  <p>For the noise floor, I anchor to the head-tier paired bootstrap CI from the lab: median +0.0210 with 95% CI [+0.0065, +0.0356], so the width is about 0.029. The F1 difference between the selected grid config and the default is tiny (0.2896 - 0.2872 = 0.0024), far inside that width, so I would not claim a real best-F1 config from this one split.</p>
+  <p>By contrast, the ECE difference is much larger: 0.0546 for the default versus 0.0286 for the selected grid config, a drop of about 0.026. Since Scenario B is calibration-first, that is the separation I would pay attention to. This supports the idea that F1 is mostly data-bounded here while calibration is more hyperparameter-sensitive. The wildcard (T_d=16, alpha=0.9) adds a direction the grid did not test: much softer teacher targets with strong KD weight. It might lower ECE further, but it could also over-soften the student, so I would treat it as a follow-up experiment rather than a deployment choice.</p>
+
+  <h2>4. Three compressions, three lessons</h2>
+  <p>The strongest interaction is between weight compression and knowledge compression, because both change the deployed model's probability shape. Quantization shifts accuracy and likely calibration: the decoder drops from macro F1 0.2401 (int8) to 0.2205 (int4) while latency improves from 13.09 ms/ex to 7.89 ms/ex. KD, in contrast, raises macro F1 from 0.2638 to 0.2789 and drops ECE from 0.1300 to 0.0445 on full validation.</p>
+  <p>If you quantize a distilled student, the int4 degradation could eat the KD gains or distort calibration, so those two techniques interact and need joint measurement.</p>
+  <p>The most orthogonal pair is label compression and weight compression. Label compression is upstream data design: the merge map collapses 153 raw issues to 113 classes and MIN_CLASS_COUNT=5 drops the smallest labels. Weight compression happens after training and mostly changes latency/VRAM, for example int8 encoder 6.27 ms/ex and 0.54 GB. They operate at different stages, so they are nearly orthogonal in mechanism even though both matter in deployment.</p>
+
+  <h2>5. Defend the deployment</h2>
+  <p>Scenario B is regulated escalation review. The primary metric is ECE (target &lt;=0.05) and the secondary metric is NLL. I would ship vanilla + temperature scaling.</p>
+  <p>On the eval fold, ECE is 0.0263 for vanilla+T versus 0.0546 for distilled and 0.1308 for vanilla. The selected grid config also meets the target at 0.0286, but vanilla+T is cheaper because it needs only a small calibration fit, not KD training. Macro F1 is identical for vanilla and vanilla+T (0.2833), so we do not give up accuracy for the calibration gain. Distilled has slightly higher macro F1 (0.2872), and the grid config is 0.2896, but F1 is not the binding metric for Scenario B. NLL is better for distilled (1.3321 vs 1.4297 for vanilla+T), but NLL is secondary here because the decision rule is based on top-1 confidence.</p>
+  <p>From Section 3c, vanilla coverage at 0.70 is 0.606 with accuracy 0.781 (n=3898), while distilled coverage at 0.70 is 0.516 with accuracy 0.832 (n=3315). The 95% SLA is not met by either model: best vanilla accuracy is 0.878 at 0.90, and best distilled accuracy is 0.934 at 0.90. So we still escalate many cases, and calibration quality on the auto-routed subset is critical.</p>
+  <p>Per-tier F1 from the lab shows the same story: head 0.6105 to 0.6314, mid 0.3797 to 0.3990, tail 0.1249 to 0.1298. KD helps, but not by a lot. Per-tier ECE improves with KD (head 0.0849 to 0.0127, mid 0.2970 to 0.1926, tail 0.3932 to 0.2574), but temperature scaling still wins top-1 ECE on the eval fold.</p>
+  <p>Part 3 confirms the metric split: ECE favors vanilla+T, NLL favors KD, macro F1 changes only slightly, and JS divergence to the teacher favors KD (head 0.0943 to 0.0530, mid 0.1522 to 0.0901, tail 0.1998 to 0.1102). Because Scenario B consumes top-1 confidence, I follow ECE.</p>
+  <p><strong>Constraint that flips my answer:</strong> if the deployment starts using the full probability distribution, for example a downstream Bayesian step, or we set a hard NLL target like &lt;=1.35, I would switch to distilled (NLL 1.3321) or to a distilled + temperature-scaling follow-up if it kept the NLL advantage while lowering ECE. If the ECE requirement relaxed above about 0.06, distilled alone could also be acceptable.</p>
+  <p><strong>Cross-week reach:</strong> if we also quantize, Week 5 shows int4 drops macro F1 (decoder 0.2401 at int8 to 0.2205 at int4) and likely adds calibration risk. For Scenario B, I would avoid int4 and at most use int8 after re-checking ECE on the exact final recipe.</p>
+</body>
+</html>
